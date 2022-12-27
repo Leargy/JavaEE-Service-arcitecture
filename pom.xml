@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>lab-work-3</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>lab-work-3</name>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>first-service-route-shared</module>
+        <module>fist-service-route-ejb</module>
+        <module>fist-service-route-rest</module>
+        <module>second-service-navigator-ejb</module>
+        <module>second-service-navigator-rest</module>
+        <module>second-service-navigator-shared</module>
+    </modules>
+
+</project>
