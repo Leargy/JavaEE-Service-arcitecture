@@ -1,23 +1,19 @@
-package com.example.secondserrvicenavigatorejb.services;
+package com.example.secondservicenavigatorrest.services;
 
 
 import dto.*;
 import exceptions.CRUDServiceException;
 import model.Routeeeeeeee;
-import org.jboss.ejb3.annotation.Pool;
 import service.CRUDService;
 
+import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
-import javax.ejb.Remote;
-import javax.ejb.Stateless;
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Stateless
-@Remote(CRUDService.class)
-@Pool(value="crudPool")
+@ManagedBean
 public class CRUDServiceImpl implements CRUDService {
 
     private Client client;

@@ -1,18 +1,13 @@
-package com.example.secondserrvicenavigatorejb.services;
+package com.example.secondservicenavigatorrest.services;
 
 import dto.CoordinatesDTOImpl;
 import dto.RequestRouteDTOImpl;
 import dto.RouteDTOImpl;
-import model.Routeeeeeeee;
-import org.jboss.ejb3.annotation.Pool;
 import service.RouteService;
 
-import javax.ejb.Remote;
-import javax.ejb.Stateless;
+import javax.annotation.ManagedBean;
 
-@Stateless
-@Remote(RouteService.class)
-@Pool(value="routePool")
+@ManagedBean
 public class RouteServiceImpl implements RouteService {
 
 

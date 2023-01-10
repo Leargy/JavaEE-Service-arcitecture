@@ -6,6 +6,8 @@ import dto.RequestRouteDTOImpl;
 import dto.RouteDTOImpl;
 import dto.RoutesList;
 import exceptions.CRUDServiceException;
+import service.CRUDService;
+import service.RouteService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -15,8 +17,13 @@ import javax.ws.rs.core.Response;
 @Path("/navigator")
 public class NavigatorResource {
 
+
     @Inject
     private JNDIUtil jndiUtil;
+    @Inject
+    private CRUDService crudService;
+    @Inject
+    private RouteService routeService;
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -27,10 +34,10 @@ public class NavigatorResource {
         RequestRouteDTOImpl routeDTO;
         try {
             String healthyUrl = jndiUtil.getHealthyCRUDRouteServiceUrl();
-            routeDTOTo = jndiUtil.getCRUDServiceEJBInstance().getRouteById(routeIdTo, token, healthyUrl);
-            routeDTOFrom = jndiUtil.getCRUDServiceEJBInstance().getRouteById(routeIdFrom, token, healthyUrl);
-            routeDTO = jndiUtil.getRouteServiceEJBInstance().formRouteBetween(routeDTOFrom, routeDTOTo, distance);
-            jndiUtil.getCRUDServiceEJBInstance().createRoute(routeDTO, token, healthyUrl);
+            routeDTOTo = crudService.getRouteById(routeIdTo, token, healthyUrl);
+            routeDTOFrom = crudService.getRouteById(routeIdFrom, token, healthyUrl);
+            routeDTO = routeService.formRouteBetween(routeDTOFrom, routeDTOTo, distance);
+            crudService.createRoute(routeDTO, token, healthyUrl);
         } catch (CRUDServiceException e) {
             return Response.status(e.getStatus()).entity(e.getMessage()).build();
         }
@@ -48,8 +55,8 @@ public class NavigatorResource {
         ParamBeanDTOImpl paramBeanDTO = new ParamBeanDTOImpl();
         try {
             String healthyUrl = jndiUtil.getHealthyCRUDRouteServiceUrl();
-            routeDTOFrom = jndiUtil.getCRUDServiceEJBInstance().getRouteById(routeIdFrom, token, healthyUrl);
-            routeDTOTo = jndiUtil.getCRUDServiceEJBInstance().getRouteById(routeIdTo, token,healthyUrl );
+            routeDTOFrom = crudService.getRouteById(routeIdFrom, token, healthyUrl);
+            routeDTOTo = crudService.getRouteById(routeIdTo, token,healthyUrl );
             paramBeanDTO.setFromX(routeDTOFrom.getFrom().getX());
             paramBeanDTO.setFromY(routeDTOFrom.getFrom().getY());
             paramBeanDTO.setFromZ(routeDTOFrom.getFrom().getZ());
@@ -60,7 +67,7 @@ public class NavigatorResource {
             paramBeanDTO.setOrderBy(orderBy.split("_")[0].split(","));
             paramBeanDTO.setDecr(orderBy.split("_")[1].equals("true"));
 
-            routeDTOList = jndiUtil.getCRUDServiceEJBInstance().findRoutesBy(paramBeanDTO, token, healthyUrl);
+            routeDTOList = crudService.findRoutesBy(paramBeanDTO, token, healthyUrl);
         } catch (CRUDServiceException e) {
             return Response.status(e.getStatus()).entity(e.getMessage()).build();
         }

@@ -36,7 +36,7 @@ public class BaseOperationsResources {
     public Response getRouteById(@PathParam("route-id") Integer routeId) {
         Route route = null;
         try {
-            route = routeWebService.getFlatsWebServiceImplPort().findRouteById(routeId);
+            route = routeWebService.getRoutesWebServiceImplPort().findRouteById(routeId);
         } catch (RouteServiceException e) {
             e.printStackTrace();
             return Response.status(500).entity(e.getMessage()).build();
@@ -65,7 +65,7 @@ public class BaseOperationsResources {
 
         Route createdRoute = null;
         try {
-            createdRoute = routeWebService.getFlatsWebServiceImplPort().createRoute(routeInfo);
+            createdRoute = routeWebService.getRoutesWebServiceImplPort().createRoute(routeInfo);
         }catch (RouteServiceException e) {
             return Response.status(500).entity(e.getMessage()).build();
         }
@@ -128,11 +128,11 @@ public class BaseOperationsResources {
         List<Route> lr = null;
         Integer sizeForCurrentFilter = null;
         try {
-            sizeForCurrentFilter = routeWebService.getFlatsWebServiceImplPort().countRouteBySpecifiedFields(param);
+            sizeForCurrentFilter = routeWebService.getRoutesWebServiceImplPort().countRouteBySpecifiedFields(param);
             if(pageSize != null && Math.ceil(sizeForCurrentFilter/pageSize) < offSet) {
                 return Response.status(400).entity("Current page selection out of bounds").build();
             }
-            lr = routeWebService.getFlatsWebServiceImplPort().findRouteBySpecifiedFields(param);
+            lr = routeWebService.getRoutesWebServiceImplPort().findRouteBySpecifiedFields(param);
         } catch (RouteServiceException e) {
             e.printStackTrace();
             return Response.status(500).entity(e.getMessage()).build();
@@ -159,7 +159,7 @@ public class BaseOperationsResources {
     public Response updateRoute(@PathParam("route-id") Integer routeId, RequestRouteDTOImpl param) {
         boolean isUppdated;
         try {
-            isUppdated = routeWebService.getFlatsWebServiceImplPort().updateRoute(routeId, param);
+            isUppdated = routeWebService.getRoutesWebServiceImplPort().updateRoute(routeId, param);
         } catch (RouteServiceException e) {
             e.printStackTrace();
             return Response.status(500).entity(e.getMessage()).build();
@@ -178,7 +178,7 @@ public class BaseOperationsResources {
     public Response deleteRoute(@PathParam("route-id") Integer routeId) {
         boolean isDeleted;
         try {
-            isDeleted = routeWebService.getFlatsWebServiceImplPort().deleteRoute(routeId);
+            isDeleted = routeWebService.getRoutesWebServiceImplPort().deleteRoute(routeId);
         } catch (RouteServiceException e) {
             e.printStackTrace();
             return Response.status(500).entity(e.getMessage()).build();

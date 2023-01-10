@@ -1,7 +1,6 @@
 package com.example.fistservicerouterest;
 
 import com.example.fistservicerouterest.util.RouteWebService;
-import dto.RouteDTOImpl;
 import exceptions.RouteServiceException;
 import model.Route;
 import model.Routeeeeeeee;
@@ -13,9 +12,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.awt.*;
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 
 @Path("/routes")
@@ -30,7 +26,7 @@ public class ExtraOperationsResources {
     public Response getDistanceSum() {
         Float distanceSum = null;
         try {
-            distanceSum = routeWebService.getFlatsWebServiceImplPort().getDistanceSum();
+            distanceSum = routeWebService.getRoutesWebServiceImplPort().getDistanceSum();
         } catch (RouteServiceException e) {
             e.printStackTrace();
             return Response.status(500).entity(e.getMessage()).build();
@@ -46,7 +42,7 @@ public class ExtraOperationsResources {
     @Path("/coordinates/max")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRouteWithMaxCoordinate() {
-        Route route = routeWebService.getFlatsWebServiceImplPort().getRouteWithMaxCoordinates();
+        Route route = routeWebService.getRoutesWebServiceImplPort().getRouteWithMaxCoordinates();
         Routeeeeeeee routeeeeeeee = new Routeeeeeeee(route.getId(),route.getName(), route.getDistance(),route.getCoordinates(),route.getCreationDate(),route.getFrom(),route.getTo());
         if(route != null) {
             return Response.ok().entity(routeeeeeeee).build();
@@ -59,7 +55,7 @@ public class ExtraOperationsResources {
     @Path("/distance/less/num")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getNumRoutesWithLessDistanceThan(@QueryParam("distance") Float distanceValue) {
-        Integer routesNum = routeWebService.getFlatsWebServiceImplPort().getNumRoutesWithDistanceLessThan(distanceValue);
+        Integer routesNum = routeWebService.getRoutesWebServiceImplPort().getNumRoutesWithDistanceLessThan(distanceValue);
         if(routesNum != null) {
             return Response.ok(routesNum).build();
         }else {

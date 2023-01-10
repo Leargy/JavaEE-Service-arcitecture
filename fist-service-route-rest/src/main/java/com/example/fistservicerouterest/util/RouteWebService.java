@@ -56,7 +56,7 @@ public class RouteWebService extends Service {
     }
 
     @WebEndpoint(name = "RoutesWebServiceImplPort")
-    public RouteService getFlatsWebServiceImplPort() {
+    public RouteService getRoutesWebServiceImplPort() {
         return super.getPort(new QName("http://services.fistservice.example.com/", "RouteServiceImplPort"), RouteService.class);
     }
 
