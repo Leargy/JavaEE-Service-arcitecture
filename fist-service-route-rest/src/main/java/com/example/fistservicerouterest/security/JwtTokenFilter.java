@@ -33,43 +33,43 @@ public class JwtTokenFilter implements ContainerRequestFilter {
     @Override
     public void filter(ContainerRequestContext containerRequestContext) throws IOException {
         return;
-//        String token = provider.resolveToken(containerRequestContext);
-//        try {
-//
-//        if(token != null) {
-//            if(provider.isTokenExpired(token)) {
-//                Response unauthorizedStatus = Response.status(Response.Status.UNAUTHORIZED)
-//                        .entity("User token expired")
-//                        .build();
-//
-//                containerRequestContext.abortWith(unauthorizedStatus);
-//            }
-//
-//            String role = provider.getUserRole(token);
-//
-//            String uri = containerRequestContext.getUriInfo().getRequestUri().getPath();
-//            boolean hasAccess = false;
-//            for (Map.Entry<String, String> entry: accessList.entrySet()) {
-//
-//                if(uri.matches(entry.getKey()) && entry.getValue().equals(role)) {
-//                    hasAccess = true;
-//                    return;
-//                }
-//            }
-//        }
-//        Response unauthorizedStatus = Response.status(Response.Status.UNAUTHORIZED)
-//                .entity("User has no access to this resource")
-//                .build();
-//
-//        containerRequestContext.abortWith(unauthorizedStatus);
-//
-//        }catch (ExpiredJwtException ex) {
-//            Response unauthorizedStatus = Response.status(Response.Status.FORBIDDEN)
-//                    .entity("User token expired")
-//                    .build();
-//
-//            containerRequestContext.abortWith(unauthorizedStatus);
-//        }
+       String token = provider.resolveToken(containerRequestContext);
+       try {
+
+       if(token != null) {
+           if(provider.isTokenExpired(token)) {
+               Response unauthorizedStatus = Response.status(Response.Status.UNAUTHORIZED)
+                       .entity("User token expired")
+                       .build();
+
+               containerRequestContext.abortWith(unauthorizedStatus);
+           }
+
+           String role = provider.getUserRole(token);
+
+           String uri = containerRequestContext.getUriInfo().getRequestUri().getPath();
+           boolean hasAccess = false;
+           for (Map.Entry<String, String> entry: accessList.entrySet()) {
+
+               if(uri.matches(entry.getKey()) && entry.getValue().equals(role)) {
+                   hasAccess = true;
+                   return;
+               }
+           }
+       }
+       Response unauthorizedStatus = Response.status(Response.Status.UNAUTHORIZED)
+               .entity("User has no access to this resource")
+               .build();
+
+       containerRequestContext.abortWith(unauthorizedStatus);
+
+       }catch (ExpiredJwtException ex) {
+           Response unauthorizedStatus = Response.status(Response.Status.FORBIDDEN)
+                   .entity("User token expired")
+                   .build();
+
+           containerRequestContext.abortWith(unauthorizedStatus);
+       }
     }
 
 }
